@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: awx-postgres-pv
+spec:
+  capacity:
+    storage: 10Gi            # adjust if you want more
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  hostPath:
+    path: /data-nfs/data/awx/postgres
+    type: Directory
