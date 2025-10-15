@@ -1,0 +1,19 @@
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: ansible-awx
+  namespace: awx
+spec:
+  service_type: NodePort
+
+  # PostgreSQL storage (binds to awx-postgres-pv via storageClass)
+  postgres_storage_class: local-storage
+  postgres_storage_requirements: {}     # optional; leave empty or set size with PVC annotations if needed
+
+  # Persist AWX projects so SCM checkouts survive pod restarts
+  projects_persistence: true
+  projects_storage_class: local-storage
+  projects_storage_size: 20Gi           # should be ≤ PV size above
+
+  # (optional) admin user/pass auto-gen; you’ll still fetch from Secret
+  # admin_user: admin
