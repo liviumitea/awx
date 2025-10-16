@@ -2,14 +2,16 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: awx-postgres-pv
+  namespace: immich
 spec:
   capacity:
-    storage: 10Gi            # adjust if you want more
+    storage: 10Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
-  hostPath:
-    path: /data-nfs/data/awx/postgres
-    type: Directory
+  storageClassName: longhorn
+  csi:
+    driver: driver.longhorn.io
+    fsType: ext4
+    volumeHandle: awx-postgres-pv
